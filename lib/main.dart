@@ -3,9 +3,6 @@ import 'package:marquee/marquee.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 
-String key =
-    '18AE4C1346A9B2DE8D2FFB1A5E3249682B4527B89295875B38AE4C1346A9B2DE8D2FFB1A5E3249682B4527B89295875B38AE4C1346A9B2DE8D2FFB1A5E3249682B4527B89295875B38AE4C1346A9B2DE8D2FFB1A5E3249682B4527B89295875B38AE4C1346A9B2DE8D2FFB1A5E3249682B4527B89295875B38AE4C1346A9B2DE8D2FFB1A5E3249682B4527B89295875B38AE4C1346A9B2DE8D2FFB1A5E3249682B4527B89295875B3';
-
 void main() {
   runApp(MyApp());
 }
@@ -87,7 +84,6 @@ class _MyAppHomeState extends State<MyAppHome> {
             body: {
               'userName': userName,
               'score': typedCharLength.toString(),
-              'key': key
             });
         timer.cancel();
       }
