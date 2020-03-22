@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:marquee/marquee.dart';
+import 'package:http/http.dart' as http;
 import 'dart:async';
+
+String key =
+    '8AE4C1346A9B2DE8D2FFB1A5E3249682B4527B89295875B38AE4C1346A9B2DE8D2FFB1A5E3249682B4527B89295875B38AE4C1346A9B2DE8D2FFB1A5E3249682B4527B89295875B38AE4C1346A9B2DE8D2FFB1A5E3249682B4527B89295875B38AE4C1346A9B2DE8D2FFB1A5E3249682B4527B89295875B38AE4C1346A9B2DE8D2FFB1A5E3249682B4527B89295875B38AE4C1346A9B2DE8D2FFB1A5E3249682B4527B89295875B3';
 
 void main() {
   runApp(MyApp());
@@ -59,7 +63,7 @@ class _MyAppHomeState extends State<MyAppHome> {
   void resetGame() {
     setState(() {
       typedCharLength = 0;
-      step = 0;
+      step = 1;
     });
   }
 
@@ -68,18 +72,25 @@ class _MyAppHomeState extends State<MyAppHome> {
       updateLastTypedAt();
       step++;
     });
-    var timer = Timer.periodic(new Duration(seconds: 1), (timer) {
+    var timer = Timer.periodic(new Duration(seconds: 1), (timer) async {
       int now = DateTime.now().millisecondsSinceEpoch;
 
-      // GAME OVER
       setState(() {
         if (step == 1 && now - lastTypedAt > 4000) {
+          // GAME OVER
           step++;
         }
-        if (step != 1) {
-          timer.cancel();
-        }
       });
+      if (step != 1) {
+        await http.post(
+            "https://klavye-delikanlisi-api.herokuapp.com/users/score",
+            body: {
+              'userName': userName,
+              'score': typedCharLength.toString(),
+              'key': key
+            });
+        timer.cancel();
+      }
     });
   }
 
